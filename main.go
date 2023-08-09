@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"basics/helpers"
+	"fmt"
+	"log"
+)
 
 type User struct {
 	FirstName string
@@ -12,6 +16,12 @@ type User struct {
 // (info *User) - ties this function to the User struct, giving it access to info from that struct
 func (info *User) greeting() string {
 	return "Hello Mr. " + info.LastName
+}
+
+// Using custom packages
+func CalculateValue(intChan chan int) {
+	randomNumber := helpers.RandomNumber(10)
+	intChan <- randomNumber
 }
 
 func main() {
@@ -53,4 +63,21 @@ func main() {
 	case true:
 		fmt.Println("Is that guy")
 	}
+
+	// Go Loops
+	// for i := 0; i <= len(cars); i++ {
+	// 	log.Println("DJ Khaled")
+	// }
+
+	for _, car := range cars {
+		log.Println(car)
+	}
+
+	// Creating channel
+	intChan := make(chan int)
+	defer close(intChan)
+
+	go CalculateValue(intChan)
+	number := <-intChan
+	log.Println(number)
 }
